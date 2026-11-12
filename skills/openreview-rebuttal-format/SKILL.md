@@ -37,6 +37,7 @@ These rules come from OpenReview's frontend source.
    - Put the caption as a bold line above the table: `**Table R1. <caption>.**`
    - Number the tables R1, R2, … so they don't clash with the paper's tables.
    - Right-align number columns with `---:`, and write "—" in empty cells.
+   - Bold the best value in each column. If the proposed method ties it, bold the method's value too. A caption that explains the bold says "best", not "higher".
 5. **Reviewers:** quote them in italics, `*"..."*`. Refer to them by their ID in backticks, such as `` `AbC1` ``.
 6. **Sub-points:** nested bullets, indented 4 spaces under the main bullet.
 7. **Examples and case studies:** a block quote with `>` at the start of every line. End each line except the last with `\`, or the lines run together.
@@ -90,12 +91,23 @@ We summarize the reviewers' main concerns and how we addressed them.
 
 ## Editing rules
 
+When converting a draft:
+
 - **Keep the author's words.** Converting a draft to this format changes only its structure. If you add, remove or change any word, list each change after the Markdown. A new lead line counts as a change.
 - **Lead lines** are short, plain and in active voice. Don't add claims, hedges or apologies the author didn't write.
+- **Drop a bold topic that opens a paragraph** when the new lead line already names it, and list the removal.
+
+When writing text or suggesting edits:
+
+- **Don't make the reply defensive.** Don't add sentences that concede gaps or limitations the author didn't raise.
+- **Suggest a wording change only when a claim is wrong or overstated**, for example "prove" when the paper has no theorem. Leave tone and emphasis to the author.
+- **Keep prose short and plain.** State the finding in the text and leave the numbers to the table.
+
+Before returning a reply:
+
 - **Deliver Markdown in a fenced code block**, so it can be copied as source.
-- **Before returning a reply:**
-  - Run `python3 check_openreview_md.py reply.md` to see its length and any rendering problems.
-  - When converting a draft, run `python3 check_openreview_md.py --diff draft.md reply.md`. It confirms that only the intended words changed.
+- Run `python3 check_openreview_md.py reply.md` to see its length and any rendering problems.
+- When converting a draft, run `python3 check_openreview_md.py --diff draft.md reply.md`. It confirms that only the intended words changed.
 
 ## Seeing the Markdown behind someone else's reply
 

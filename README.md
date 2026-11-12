@@ -13,8 +13,10 @@ Claude Code skills for writing rebuttals.
 ```bash
 git clone git@github.com:a-little-hoof/Rebuttal-Done-Right.git
 mkdir -p ~/.claude/skills
-cp -r Rebuttal-Done-Right/skills/openreview-rebuttal-format ~/.claude/skills/
+ln -s "$PWD/Rebuttal-Done-Right/skills/openreview-rebuttal-format" ~/.claude/skills/
 ```
+
+The link keeps the installed skill in step with the clone, so `git pull` updates it, and a running session picks it up without a restart. If you set `CLAUDE_CONFIG_DIR`, link into `$CLAUDE_CONFIG_DIR/skills` instead.
 
 Claude Code then uses the skill when you ask for OpenReview Markdown. You can also call it with `/openreview-rebuttal-format`.
 
