@@ -93,14 +93,14 @@ We summarize the reviewers' main concerns and how we addressed them.
 
 When converting a draft:
 
-- **Keep the author's words.** Converting a draft to this format changes only its structure. If you add, remove or change any word, list each change after the Markdown. A new lead line counts as a change.
+- **Keep the author's words.** Converting a draft to this format changes only its structure. Don't reword, shorten or polish the author's sentences. If you add, remove or change any word, list each change after the Markdown. A new lead line counts as a change.
 - **Lead lines** are short, plain and in active voice. Don't add claims, hedges or apologies the author didn't write.
 - **Drop a bold topic that opens a paragraph** when the new lead line already names it, and list the removal.
+- **Flag claims, don't fix them.** If a claim is wrong or overstated, for example "prove" when the paper has no theorem, say so after the Markdown and leave the text as written. Don't suggest changes of tone or emphasis.
 
-When writing text or suggesting edits:
+When writing new text, such as a lead line or a summary from notes:
 
 - **Don't make the reply defensive.** Don't add sentences that concede gaps or limitations the author didn't raise.
-- **Suggest a wording change only when a claim is wrong or overstated**, for example "prove" when the paper has no theorem. Leave tone and emphasis to the author.
 - **Keep prose short and plain.** State the finding in the text and leave the numbers to the table.
 
 Before returning a reply:
