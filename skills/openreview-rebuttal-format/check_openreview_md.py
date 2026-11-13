@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Check Markdown before posting it as an OpenReview comment.
 
-    python3 check_openreview_md.py reply.md [--limit 5000]
+    python3 check_openreview_md.py reply.md [--limit N]
     python3 check_openreview_md.py --diff draft.md reply.md
 
 The first form prints the length and warns about source that OpenReview will
-display differently from what it looks like. The second lists every word that
-differs between a draft and its formatted version, ignoring Markdown markup.
+display differently from what it looks like. Venues set different length
+limits, so the length is checked only against a --limit you give. The second
+lists every word that differs between a draft and its formatted version,
+ignoring Markdown markup.
 """
 import argparse
 import difflib
@@ -87,14 +89,15 @@ def check(path, limit):
         check_math(span, plain.count("\n", 0, m.start()) + 1, warn)
 
     length = js_length(text.strip())
-    print(f"{path}: {length:,} characters (limit {limit:,})")
-    if length > limit:
-        print(f"  over the limit by {length - limit:,}: split into numbered comments")
+    over = limit is not None and length > limit
+    print(f"{path}: {length:,} characters" + (f" (limit {limit:,})" if limit is not None else ""))
+    if over:
+        print(f"  over the limit by {length - limit:,}")
     for n, msg in sorted(problems):
         print(f"  line {n}: {msg}")
     if not problems:
         print("  no rendering problems found")
-    return length <= limit and not problems
+    return not over and not problems
 
 
 def words(path):
@@ -133,7 +136,7 @@ def diff(old_path, new_path):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("files", nargs="+")
-    ap.add_argument("--limit", type=int, default=5000, help="the venue's comment length limit")
+    ap.add_argument("--limit", type=int, help="the venue's comment length limit, if you want it checked")
     ap.add_argument("--diff", action="store_true", help="compare the wording of two files")
     args = ap.parse_args()
     if args.diff:

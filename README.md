@@ -25,7 +25,7 @@ Claude Code then uses the skill when you ask for OpenReview Markdown. You can al
 The checker needs Python 3.9 or later and nothing else.
 
 ```bash
-# length and rendering problems
+# length and rendering problems (add --limit N to check your venue's limit)
 python3 skills/openreview-rebuttal-format/check_openreview_md.py reply.md
 
 # words that differ between your draft and the formatted reply

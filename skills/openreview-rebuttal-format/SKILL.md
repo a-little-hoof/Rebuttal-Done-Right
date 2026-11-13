@@ -22,7 +22,6 @@ These rules come from OpenReview's frontend source.
   - A backslash before punctuation is removed, so `\,` arrives as `,` and `\{` as `{`. Double the backslash: `\\,`, `\\;`, `\\!`, `\\{`, `\\}`.
   - A LaTeX line break needs four backslashes: `\\\\`.
   - A pair of `*` turns into italics. Write `\*`, or use `\ast` or `\times`. If a `_` causes italics, write `\_`.
-- **Length:** each venue caps the length of a comment, and 5,000 characters is common. Split a long reply into numbered comments, for example titled "Response (1/2)" and "Response (2/2)".
 
 ## Reply structure
 
@@ -106,6 +105,7 @@ When writing new text, such as a lead line or a summary from notes:
 Before returning a reply:
 
 - **Deliver Markdown in a fenced code block**, so it can be copied as source.
+- **Don't split a reply** into several comments to fit a length limit unless the author asks. Limits differ by venue.
 - Run `python3 check_openreview_md.py reply.md` to see its length and any rendering problems.
 - When converting a draft, run `python3 check_openreview_md.py --diff draft.md reply.md`. It confirms that only the intended words changed.
 
