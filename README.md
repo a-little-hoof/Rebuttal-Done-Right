@@ -11,7 +11,7 @@ Claude Code skills for writing rebuttals.
 ## Install
 
 ```bash
-git clone git@github.com:a-little-hoof/Rebuttal-Done-Right.git
+git clone https://github.com/a-little-hoof/Rebuttal-Done-Right.git
 mkdir -p ~/.claude/skills
 ln -s "$PWD/Rebuttal-Done-Right/skills/openreview-rebuttal-format" ~/.claude/skills/
 ```
