@@ -12,12 +12,12 @@ Each reviewer point gets one bold lead line that names the point, its topic and 
 These rules come from OpenReview's frontend source.
 
 - **Line breaks:** comments are Markdown with GitHub-style tables, and single line breaks are ignored. Consecutive lines join into one paragraph, so put a blank line between every paragraph, list, table, quote and heading.
-- **No HTML or images:** raw HTML and images (`![](...)`) appear as literal text, and there is no colored text. To point at a figure, link to its page of the PDF: `[Fig. 3](https://openreview.net/pdf?id=<forum-id>#page=7)`.
-- **Sizes:**
+- **No HTML or images:** raw HTML and images (`![](...)`) appear as literal text, so you can't choose colors. To point at a figure, link to its page of the PDF: `[Fig. 3](https://openreview.net/pdf?id=<forum-id>#page=7)`.
+- **Sizes and colors:**
   - `#` and `##` headings are large; `###` is only slightly larger than normal text.
   - `####` and smaller headings are smaller than normal text.
-  - `**bold**` stays at normal size.
-  - Text in backticks shows in red, monospaced.
+  - `**bold**` stays at normal size and shows in dark blue.
+  - Text in backticks shows in red, monospaced. Backticks are the only way to make text red. Markdown and math inside them don't render.
 - **Math:** MathJax renders `$...$` and `$$...$$`, but Markdown processes the text first.
   - A backslash before punctuation is removed, so `\,` arrives as `,` and `\{` as `{`. Double the backslash: `\\,`, `\\;`, `\\!`, `\\{`, `\\}`.
   - A LaTeX line break needs four backslashes: `\\\\`.
@@ -30,6 +30,7 @@ These rules come from OpenReview's frontend source.
    `**W1 – <topic> – <one-sentence answer>.**`
    - Write the answer in active voice ("We provide ...", not "... are provided").
    - Points that share one answer share one line: `**W2, Q1 – <topic> – <answer>.**`
+   - For a red label at normal size, put the label in backticks: ``**`W1 – <topic>` – <answer>.**``
    - For a larger, more prominent line, use a heading instead: ``## `W1 – <topic>`: <answer>``. Use one style throughout a reply.
 3. The author's paragraphs for that point.
 4. **Tables:**
