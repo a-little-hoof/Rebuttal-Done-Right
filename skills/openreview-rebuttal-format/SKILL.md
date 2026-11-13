@@ -1,17 +1,17 @@
 ---
 name: openreview-rebuttal-format
-description: Write or convert rebuttal replies, reviewer responses and end-of-discussion summaries as Markdown that renders correctly on OpenReview, using one bold lead line per reviewer point. Use when the user asks for "md code" for OpenReview, wants a draft reply formatted, or needs tables, math, reviewer quotes or case studies to display properly in an OpenReview comment.
+description: Write or convert rebuttal replies, reviewer responses and end-of-discussion summaries as OpenReview Markdown in the style of strong published rebuttals - a bold heading per reviewer point with its label in red, `---` between points, bold for what changed and the key result, red for short identifiers, italics for reviewer quotes. Use when the user asks for "md code" for OpenReview, wants a draft reply formatted, or needs tables, math, reviewer quotes or case studies to display properly in an OpenReview comment.
 ---
 
 # OpenReview rebuttal format
 
-Each reviewer point gets one bold lead line that names the point, its topic and the answer. The author's own paragraphs follow, with tables, quotes and case studies formatted so OpenReview displays them as intended.
+This format copies the markup of published OpenReview rebuttals. Each reviewer point opens with a bold heading whose label is red, `---` lines separate the points, and a few markers show a skimming reader what matters. The section "Where each marker goes" says where to put red, bold and italics.
 
 ## How OpenReview renders a comment
 
-These rules come from OpenReview's frontend source.
+These rules come from OpenReview's frontend source and its Markdown library (marked, GitHub style).
 
-- **Line breaks:** comments are Markdown with GitHub-style tables, and single line breaks are ignored. Consecutive lines join into one paragraph, so put a blank line between every paragraph, list, table, quote and heading.
+- **Line breaks:** single line breaks are ignored. Consecutive lines join into one paragraph, so put a blank line between paragraphs, lists, quotes and headings. A table may sit directly under its caption line.
 - **No HTML or images:** raw HTML and images (`![](...)`) appear as literal text, so you can't choose colors. To point at a figure, link to its page of the PDF: `[Fig. 3](https://openreview.net/pdf?id=<forum-id>#page=7)`.
 - **Sizes and colors:**
   - `#` and `##` headings are large; `###` is only slightly larger than normal text.
@@ -23,55 +23,89 @@ These rules come from OpenReview's frontend source.
   - A LaTeX line break needs four backslashes: `\\\\`.
   - A pair of `*` turns into italics. Write `\*`, or use `\ast` or `\times`. If a `_` causes italics, write `\_`.
 
-## Reply structure
-
-1. An optional opening line of thanks.
-2. One block per reviewer point, starting with a bold lead line:
-   `**W1 – <topic> – <one-sentence answer>.**`
-   - Write the answer in active voice ("We provide ...", not "... are provided").
-   - Points that share one answer share one line: `**W2, Q1 – <topic> – <answer>.**`
-   - For a red label at normal size, put the label in backticks: ``**`W1 – <topic>` – <answer>.**``
-   - For a larger, more prominent line, use a heading instead: ``## `W1 – <topic>`: <answer>``. Use one style throughout a reply.
-3. The author's paragraphs for that point.
-4. **Tables:**
-   - Put the caption as a bold line above the table: `**Table R1. <caption>.**`
-   - Number the tables R1, R2, … so they don't clash with the paper's tables.
-   - Right-align number columns with `---:`, and write "—" in empty cells.
-   - Bold the best value in each column. If the proposed method ties it, bold the method's value too. A caption that explains the bold says "best", not "higher".
-5. **Reviewers:** quote them in italics, `*"..."*`. Refer to them by their ID in backticks, such as `` `AbC1` ``.
-6. **Sub-points:** nested bullets, indented 4 spaces under the main bullet.
-7. **Examples and case studies:** a block quote with `>` at the start of every line. End each line except the last with `\`, or the lines run together.
-8. **Dividers:** `---` on its own line, with a blank line above it. Without the blank line, the line above turns into a heading.
-
-## Templates
-
-Reply to one reviewer:
+## The format
 
 ```markdown
 We thank the reviewer for <what they noted>. Below, we address each point.
 
-**W1 – <topic> – We <answer>.**
+---
 
-<paragraph in the author's words>
+### **`W1 – <topic>` – We <answer>.**
 
-**Table R1. <caption>.**
+<paragraph>. **We added <what changed> in <Appendix X>.** As shown in **Table R1**, **<the key result>**.
 
-| Setting | Metric A | Metric B |
+**Table R1**: <caption>
+| Setting | Baseline | Ours |
 |---|---:|---:|
-| <row> | 0.00 | 0.00 |
+| <row> | 0.00 | **0.00** |
 
-<paragraph>
+<paragraph>. **In the revision, we will <commitment>.**
 
-**W2, Q1 – <topic> – We <answer>.**
+---
 
-<paragraph>
+### **`W2, Q1 – <topic>` – We <answer>.**
 
-> <Input>: <text>\
-> **Baseline output:** <text> // <why it fails>\
+<paragraph>, as discussed around `L120 - 135`.
+
+> Input: <text>\
+> **Baseline output:** <text> // `<verdict>` because <why>\
 > **Our output:** <text> // <why it works>
+
+---
+
+[1] <reference cited as [1] above>
 ```
 
-Summary for the area chair at the end of the discussion:
+- **Heading:** a `###` heading holding one bold line: the red label, a dash, and a one-sentence answer.
+  - The label is the point ID and its topic. Points that share one answer share one heading: `W2, Q1 – <topic>`.
+  - Write the answer in active voice ("We provide ...", not "... are provided").
+  - When you write the answer, start with the stance, then the action: "Sure, we now added ...", "True. However, ...", "Fair point; we now ...".
+- **Larger headings:** use `##` and end the label with a colon: ``## **`W1 - <topic>:` <answer>.**``. Use one heading style throughout a reply.
+
+## Where each marker goes
+
+**Red (backticks)** marks short identifiers only:
+- the label and topic in each heading;
+- reviewer IDs: `` `AbC1` ``;
+- line numbers in the paper: `` `L120` ``, `` `L120 - 135` ``;
+- literal names in an example, such as the entity or relation a system looks up;
+- the short verdict in a case study: `` `Wrong fact retrieved` ``;
+- a note added after posting, in bold and red: ``**`Update: we now also added <X>.`**``
+
+Never put a whole paragraph, numbers or math in backticks.
+
+**Bold** marks what a skimming reader must see:
+- the whole heading line;
+- the sentence that says what changed and where: "We now added a section on X in Appendix H." If the sentence thanks the reviewer first, the bold starts there;
+- promises for the final version: "we will report ... in the camera-ready version";
+- the one key result of a point;
+- references to rebuttal tables in the text: `As shown in **Table R1**, ...`;
+- the table label in a caption, and the best value in each table column;
+- labels in case studies and in summaries.
+
+**Italics** mark:
+- reviewer quotes, `*"..."*`, in the thanks line, in a summary, or when you adopt a reviewer's phrase;
+- names of sections or terms from the paper: `*Error Analysis*`;
+- a single word that carries the point: "cover it *fully*".
+
+**`---`** goes on its own line, with a blank line above it. Without the blank line, the line above turns into a heading. Put one:
+- after the opening paragraph;
+- between points;
+- before a closing note and before the reference list.
+
+**Tables:**
+- Put the caption directly above the table: `**Table R1**: <caption>`. When the table is also in the revised paper, a quote line can name it instead: `> <caption> (Table 11)`, then a blank line. Without the blank line, the table is drawn inside the quote.
+- Number rebuttal tables R1, R2, … so they don't clash with the paper's tables.
+- Right-align number columns with `---:`, and write "—" in empty cells.
+- Bold the best value in each column. If the proposed method ties it, bold the method's value too. A caption that explains the bold says "best", not "higher".
+
+**Lists:** use a numbered list for reasons or components ("two reasons: 1. … 2. …"). Use bullets for parallel items, each written `Label: text`. Indent sub-bullets by 4 spaces.
+
+**Case studies:** a block quote with `>` at the start of every line. End each line except the last with `\`, or the lines run together. Bold the labels, put `//` before each explanation, and write the verdict in red.
+
+**References and links:** cite papers as [1], [2] and list them after the last `---`. Link a table or figure of the paper to its PDF page.
+
+## Summary for the area chair
 
 ```markdown
 We summarize the reviewers' main concerns and how we addressed them.
@@ -93,12 +127,13 @@ We summarize the reviewers' main concerns and how we addressed them.
 
 When converting a draft:
 
-- **Keep the author's words.** Converting a draft to this format changes only its structure. Don't reword, shorten or polish the author's sentences. If you add, remove or change any word, list each change after the Markdown. A new lead line counts as a change.
-- **Lead lines** are short, plain and in active voice. Don't add claims, hedges or apologies the author didn't write.
-- **Drop a bold topic that opens a paragraph** when the new lead line already names it, and list the removal.
-- **Flag claims, don't fix them.** If a claim is wrong or overstated, for example "prove" when the paper has no theorem, say so after the Markdown and leave the text as written. Don't suggest changes of tone or emphasis.
+- **Keep the author's words.** Converting a draft to this format changes only its structure. Don't reword, shorten or polish the author's sentences. If you add, remove or change any word, list each change after the Markdown. A new heading counts as a change.
+- **Headings** are short, plain and in active voice. Don't add claims, hedges or apologies the author didn't write.
+- **Drop a bold topic that opens a paragraph** when the new heading already names it, and list the removal.
+- **Add the markers where this format puts them.** Bold and red only text the author wrote; don't write new sentences to mark. Markers aren't word changes, but list each sentence you made bold, so the author can check the emphasis.
+- **Flag claims, don't fix them.** If a claim is wrong or overstated, for example "prove" when the paper has no theorem, say so after the Markdown and leave the text as written. Apart from the markers, leave tone and emphasis to the author.
 
-When writing new text, such as a lead line or a summary from notes:
+When writing new text, such as a heading or a summary from notes:
 
 - **Don't make the reply defensive.** Don't add sentences that concede gaps or limitations the author didn't raise.
 - **Keep prose short and plain.** State the finding in the text and leave the numbers to the table.
@@ -119,3 +154,6 @@ Before returning a reply:
   fetch('https://api2.openreview.net/notes?id=<note-id>', {credentials: 'include'})
     .then(r => r.json()).then(d => console.log(d.notes[0].content.comment.value))
   ```
+
+- **From a fetch tool, without a browser:** search for a distinctive phrase of the reply. The result holds the raw Markdown in `content.comment.value`:
+  `https://api2.openreview.net/notes/search?term=%22<phrase>%22&content=all&source=reply`

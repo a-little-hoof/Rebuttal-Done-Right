@@ -64,8 +64,8 @@ def check(path, limit):
             continue
         if re.fullmatch(r"\s*(-{3,}|={3,})\s*", line) and prev.strip() and not prev.lstrip().startswith("|"):
             warn(n, "'---' right under text turns that text into a heading: add a blank line above")
-        if line.startswith("|") and prev.strip() and not prev.startswith("|"):
-            warn(n, "table starts right after text: add a blank line above")
+        if line.startswith("|") and prev.startswith(">"):
+            warn(n, "table right after a quote line is drawn inside the quote: add a blank line above")
         if line.startswith("|") and not nxt.startswith("|"):
             after = next((l for l in lines[n:] if l.strip()), "")
             if after.startswith("**Table"):
@@ -106,7 +106,7 @@ def words(path):
     for token in open(path, encoding="utf-8").read().split():
         if re.fullmatch(r"#+|[|:\-]+|>|[*+-]", token):
             continue  # headings, table rules, quote and bullet markers
-        token = token.rstrip("\\").strip("*`>")
+        token = re.sub(r"[*`]", "", token).rstrip("\\").strip(">")  # bold, italics and red anywhere in a word
         if token:
             out.append(token)
     return out

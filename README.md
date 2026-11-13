@@ -6,7 +6,7 @@ Claude Code skills for writing rebuttals.
 
 | Skill | What it does |
 |---|---|
-| [`openreview-rebuttal-format`](skills/openreview-rebuttal-format/SKILL.md) | Writes or converts rebuttal replies as Markdown that renders correctly on OpenReview: one bold lead line per reviewer point, tables with captions, math, reviewer quotes, case studies and end-of-discussion summaries. A checker reports length, rendering problems and changed words. |
+| [`openreview-rebuttal-format`](skills/openreview-rebuttal-format/SKILL.md) | Writes or converts rebuttal replies in the markup of strong published OpenReview rebuttals: a bold heading per reviewer point with its label in red, `---` between points, and bold, red and italic markers where those rebuttals put them. It also covers tables, math, reviewer quotes, case studies and end-of-discussion summaries. A checker reports length, rendering problems and changed words. |
 
 ## Install
 
