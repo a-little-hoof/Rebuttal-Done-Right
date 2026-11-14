@@ -30,7 +30,7 @@ def check_math(span, line, warn):
     seen, lost, i = [], set(), 0
     while i < len(span):
         if span[i] == "\\" and i + 1 < len(span) and re.match(f"[{PUNCT}]", span[i + 1]):
-            if span[i + 1] != "\\":
+            if span[i + 1] not in "\\_*":  # \_ and \* are meant to reach MathJax as _ and *
                 lost.add("\\" + span[i + 1])
             seen.append(span[i + 1])
             i += 2
@@ -103,12 +103,18 @@ def check(path, limit):
 def words(path):
     """Words of a file with Markdown markup removed, so only wording is compared."""
     out = []
-    for token in open(path, encoding="utf-8").read().split():
-        if re.fullmatch(r"#+|[|:\-]+|>|[*+-]", token):
-            continue  # headings, table rules, quote and bullet markers
-        token = re.sub(r"[*`]", "", token).rstrip("\\").strip(">")  # bold, italics and red anywhere in a word
-        if token:
-            out.append(token)
+    for line in open(path, encoding="utf-8").read().split("\n"):
+        while m := re.match(r"\s*(>|#{1,6}(?=\s|$)|[*+-](?=\s|$))", line):
+            line = line[m.end():]  # quote, heading and bullet markers count only where a line starts
+        if re.fullmatch(r"[\s|:-]*-[\s|:-]*|\s*([*_])(\s*\1){2,}\s*", line):
+            continue  # table rules and ---, *** or ___ lines
+        if line.lstrip().startswith("|"):
+            line = re.sub(r"(?<!\\)\|", " ", line)  # table cell borders
+        line = re.sub(rf"\\([{PUNCT}])", r"\1", line)  # Markdown drops the backslash of an escape
+        for token in line.split():
+            token = (re.sub(r"[*`]", "", token) or token.strip("`")).rstrip("\\")  # bold, italics and red; a lone * stays
+            if token:
+                out.append(token)
     return out
 
 
