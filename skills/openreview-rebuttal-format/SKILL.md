@@ -59,7 +59,8 @@ We thank the reviewer for <what they noted>. Below, we address each point.
 - **Heading:** a `###` heading holding one bold line: the red label, a dash, and a one-sentence answer.
   - The label is the point ID and its topic. Points that share one answer share one heading: `W2, Q1 – <topic>`.
   - Write the answer in active voice ("We provide ...", not "... are provided").
-  - When you write the answer, start with the stance, then the action: "Sure, we now added ...", "True. However, ...", "Fair point; we now ...".
+  - When you write the answer, start with the stance, then the action: "Sure, we now added ...", "True. However, ...", "Fair point, we now ...".
+  - Don't use a semicolon in the answer. End the stance with a period or a comma: "We agree. We will ...", not "We agree; we will ...".
 - **Larger headings:** use `##` and end the label with a colon: ``## **`W1 - <topic>:` <answer>.**``. Use one heading style throughout a reply.
 
 ## Where each marker goes
@@ -137,6 +138,7 @@ When writing new text, such as a heading or a summary from notes:
 
 - **Don't make the reply defensive.** Don't add sentences that concede gaps or limitations the author didn't raise.
 - **Keep prose short and plain.** State the finding in the text and leave the numbers to the table.
+- **Don't use semicolons.** They read as machine-written. Split the sentence or use a comma. Leave the author's own semicolons as they are.
 
 Before returning a reply:
 
