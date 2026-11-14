@@ -8,6 +8,10 @@ Claude Code skills for writing rebuttals.
 |---|---|
 | [`openreview-rebuttal-format`](skills/openreview-rebuttal-format/SKILL.md) | Writes or converts rebuttal replies in the markup of strong published OpenReview rebuttals: a bold heading per reviewer point with its label in red, `---` between points, and bold, red and italic markers where those rebuttals put them. It also covers tables, math, reviewer quotes, case studies and end-of-discussion summaries. A checker reports length, rendering problems and changed words. |
 
+## Example
+
+[A real OpenReview discussion, with each author reply shown before and after the skill](https://a-little-hoof.github.io/Rebuttal-Done-Right/). The page is [`docs/index.html`](docs/index.html).
+
 ## Install
 
 ```bash
